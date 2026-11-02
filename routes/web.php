@@ -17,8 +17,8 @@ Route::get('/about', [PageController::class, 'about']);
 
 Route::resource('students', StudentController::class);
 
-Route::get('/roll/{your_roll}', function (Student $your_roll) {
-    return view('students.show', ['student' => $your_roll]);
+Route::get('/roll/{roll}', function (Student $roll) {
+    return view('students.show', ['student' => $roll]);
 });
 
 Route::get('/api/students', function () {

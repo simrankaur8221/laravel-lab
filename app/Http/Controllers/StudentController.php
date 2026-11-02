@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Student;
@@ -9,6 +10,7 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
+
         return view('students.index', compact('students'));
     }
 
@@ -20,17 +22,17 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'roll_no' => 'required|unique:students,roll_no',
-            'name' => 'required',
+            'roll_no' => 'required|string|unique:students,roll_no',
+            'name' => 'required|string',
             'email' => 'required|email|unique:students,email',
-            'department' => 'required',
-            'semester' => 'required|integer',
+            'department' => 'sometimes|string',
+            'semester' => 'sometimes|integer',
             'cgpa' => 'nullable|numeric',
         ]);
 
         Student::create($validated);
 
-        return redirect()->route('students.index')
+        return redirect('/students')
             ->with('status', 'Student added successfully!');
     }
 

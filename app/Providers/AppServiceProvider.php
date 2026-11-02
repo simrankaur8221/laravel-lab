@@ -15,8 +15,10 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        Route::bind('your_roll', function ($value) {
-            return Student::where('roll_no', $value)->firstOrFail();
+        Route::bind('roll', function ($value) {
+            return Student::where('roll_no', $value)
+                ->orWhere('roll_no', 'like', '%-' . $value)
+                ->firstOrFail();
         });
     }
 }
